@@ -77,6 +77,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "os_chat.users",
+    "os_chat.chat",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
