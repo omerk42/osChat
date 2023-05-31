@@ -1,1 +1,73 @@
-{% extends "base.html" %}
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}os chat{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Behold My Awesome Project!">
+    <meta name="author" content="omer khan and sultan fahad">
+
+    <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    <div class="wrapper">
+        <div class="inner-wrapper">
+          <div class="landscape"></div>
+        </div>
+        <div class="nrw">
+          <span class="new">
+            <span class="letter">w</span>
+            <span class="letter">e</span>
+            <span class="letter">l</span>
+            <span class="letter">c</span>
+            <span class="letter">o</span>
+            <span class="letter">m</span>
+            <span class="letter">e</span>
+          </span>
+          <span class="retro">
+            <span class="letter">t</span>
+            <span class="letter">o</span>
+          </span>
+          <span class="name">
+            <span class="letter">O</span>
+            <span class="sletter">m</span>
+            <span class="sletter">e</span>
+            <span class="sletter">r</span>
+            <span class="letter"></span>
+            <span class="letter"></span>
+            <span class="letter">s</span>
+            <span class="sletter">u</span>
+            <span class="sletter">l</span>
+            <span class="sletter">t</span>
+            <span class="sletter">a</span>
+            <span class="sletter">n</span>
+            <span class="ssletter">c</span>
+            <span class="ssletter">h</span>
+            <span class="ssletter">a</span>
+            <span class="ssletter">t</span>
+          </span>
+          <script> 
+          const LogUrl = "{% url 'account_login' %}"
+          const SignUrl = "{% url 'account_signup' %}"
+          </script>
+
+  
+
+          <button  onclick="window.location.href=SignUrl;" style="--clr:#FF44CC"><span>Sign up</span><i></i></button>
+          <button   onclick="window.location.href=LogUrl;" style="--clr:#0FF0FC"><span>login</span><i></i></button>
+      
+          
+        </div>
+        <div class="triangle"></div>
+      </div>
+
+  </body>
+    
+ </html> 

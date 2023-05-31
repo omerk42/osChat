@@ -1,0 +1,274 @@
+@import 'https://fonts.googleapis.com/css?family=Rubik+One';
+/*
+@author Jack Philippi
+@description @NewRetroWave - I don't own any rights to the NewRetroWave logo or name 👽. Sorry it plays up on Mozilla. I'll fix it when I have a minute!
+*/
+  
+@font-face {
+  font-family: OutRun;
+  src: url("https://jackphilippi.com.au/cdn/fonts/outrun_future.otf") format("opentype");
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+ 
+body {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #111;
+  background: linear-gradient(#0c141f 40%, #cf33d9 41%, #0c141f 60%);
+}
+ 
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+ 
+.inner-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin: 0 auto;
+  perspective: 180px;
+  perspective-origin: 50% 40%;
+}
+ 
+.landscape {
+  position: absolute;
+  width: 200%;
+  left: -50%;
+  height: 130%;
+  bottom: -30%;
+  background-image: -webkit-linear-gradient(top, #CF33D9 2px, transparent 2px), -webkit-linear-gradient(left, #CF33D9 2px, transparent 2px);
+  background-size: 50px 50px, 80px 80px;
+  background-position: -1px -1px, -1px -1px;
+  transform: rotateX(85deg);
+  animation: moveUp 1s infinite linear;
+}
+ 
+.nrw {
+  z-index: 50;
+}
+ 
+.triangle {
+  z-index: 0;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 200px solid transparent;
+  border-right: 250px solid transparent;
+  border-bottom: 200px solid rgba(5, 5, 5, 0.33);
+  transform: rotate(15deg);
+}
+ 
+.new {
+  font-size: 5.2em;
+  text-transform: uppercase;
+  font-family: "Open Sans";
+  color: transparent;
+  position: relative;
+  display: block;
+  letter-spacing: -15px;
+  transform: rotate(-10deg) skew(-20deg);
+  margin-left: -50px;
+  margin-bottom: -36px;
+}
+.new > .letter {
+  -webkit-text-stroke: 2px #F4C6F4;
+  margin-top: -8px;
+  display: inline-block;
+  padding: 0 1px;
+  animation: glow 2.5s linear infinite;
+}
+
+@keyframes moveUp{
+  0% {
+    background-position: -1px -1px, -1px -1px;
+  }
+  100% {
+    background-position: -50px -50px, -1px -1px;
+  }
+}
+ 
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 6px #CF33D9) drop-shadow(0 0 6px #CF33D9);
+  }
+  50% {
+    filter: drop-shadow(0 0 1px #CF33D9) drop-shadow(0 0 1px #CF33D9);
+  }
+  100% {
+    filter: drop-shadow(0 0 6px #CF33D9) drop-shadow(0 0 6px #CF33D9);
+  }
+}
+.retro {
+  font-size: 5.5em;
+  font-weight: 800;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: -12px;
+  transform: rotate(-10deg) skew(-15deg);
+  margin-bottom: -20px;
+}
+.retro > .letter {
+  display: inline-block;
+  padding: 0 10px;
+  margin: 0 -10px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIzMiUiIHN0b3AtY29sb3I9IiMxODE5MWEiLz48c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iIzE1N2JlNiIvPjxzdG9wIG9mZnNldD0iNTIlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PHN0b3Agb2Zmc2V0PSI1NiUiIHN0b3AtY29sb3I9IiMxODE5MWEiLz48c3RvcCBvZmZzZXQ9Ijg1JSIgc3RvcC1jb2xvcj0iIzE1N2JlNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(32%, #18191a), color-stop(40%, #157be6), color-stop(52%, #ffffff), color-stop(56%, #18191a), color-stop(85%, #157be6), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(top, #18191a 32%, #157be6 40%, #ffffff 52%, #18191a 56%, #157be6 85%, #ffffff);
+  background: -webkit-linear-gradient(top, #18191a 32%, #157be6 40%, #ffffff 52%, #18191a 56%, #157be6 85%, #ffffff);
+  background: linear-gradient(to bottom, #18191a 32%, #157be6 40%, #ffffff 52%, #18191a 56%, #157be6 85%, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #FFF;
+}
+ 
+    
+.name {
+  
+  font-family: "OutRun", "Helvetica", sans-serif;
+  color: #F1C1F4;
+  font-weight: 800;
+  position: relative;top: -30px; left:65px;
+  text-transform: uppercase;
+  display: block;
+  letter-spacing: -15px;
+  transform: rotate(-10deg) skew(-20deg);
+  margin-left: -50px;
+  margin-bottom: -36px;
+}
+.name > .letter {
+  font-size: 5.2em;
+  -webkit-text-stroke: 2px black;
+  margin-top: -8px;
+  display: inline-block;
+  padding: 0 1px;
+}
+.name > .sletter {
+  -webkit-text-stroke: 2px black;
+  font-size: 4.0em;
+  text-transform: lowercase;
+  margin-top: -8px;
+  display: inline-block;
+  padding: 0 1px;
+}
+.name > .ssletter {
+  -webkit-text-stroke: 2px black;
+  color: blue;
+  font-size: 3.0em;
+  text-transform: lowercase;
+  margin-top: -8px;
+  display: inline-block;
+  letter-spacing: -8px;
+  position: relative;top: 30px; left: -80px;
+}
+
+
+button {
+  position: relative;top: 30px;
+  background: #444;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: none;
+  letter-spacing: 0.1rem;
+  font-size: 1rem;
+  padding: 1rem 3rem;
+  transition: 0.2s;
+}
+
+button:hover {
+  letter-spacing: 0.2rem;
+  padding: 1.1rem 3.1rem;
+  background: var(--clr);
+  color: var(--clr);
+  /* box-shadow: 0 0 35px var(--clr); */
+  animation: box 3s infinite;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #272822;
+}
+
+button span {
+  position: relative;
+  z-index: 1;
+}
+button i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+button i::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  left: 80%;
+  top: -2px;
+  border: 2px solid var(--clr);
+  background: #272822;
+  transition: 0.2s;
+}
+
+button:hover i::before {
+  width: 15px;
+  left: 20%;
+  animation: move 3s infinite;
+}
+
+button i::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  left: 20%;
+  bottom: -2px;
+  border: 2px solid var(--clr);
+  background: #272822;
+  transition: 0.2s;
+}
+
+button:hover i::after {
+  width: 15px;
+  left: 80%;
+  animation: move 3s infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes box {
+  0% {
+    box-shadow: #27272c;
+  }
+  50% {
+    box-shadow: 0 0 25px var(--clr);
+  }
+  100% {
+    box-shadow: #27272c;
+  }
+}

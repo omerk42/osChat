@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #333; /* Dark background color */
+  }
+  
+  .container {
+    border: 1px solid violet; /* Border color */
+    padding: 30px;
+    background-color: #111; /* Dark container background color */
+    color: #fff; /* Text color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Box shadow */
+    max-width: 600px; /* Maximum width of the container */
+    width: 90%; /* Responsive width */
+    border-radius: 10px; /* Rounded borders */
+    position: relative; /* To add the glow effect */
+  }
+  
+
+  
