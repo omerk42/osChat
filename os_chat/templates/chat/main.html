@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 {% if request.user.is_authenticated %}
-<p>this chat</p>
+<p>only loged in user can see</p>
 {% else %}
-<p>please login</p>
+<p>if user is not logedin</p>
 {% endif %}
 {% endblock content %}

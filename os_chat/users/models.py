@@ -16,6 +16,7 @@ class User(AbstractUser):
     first_name = None  # type: ignore
     last_name = None  # type: ignore
 
+
     def get_absolute_url(self) -> str:
         """Get URL for user's detail view.
 

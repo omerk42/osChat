@@ -18,5 +18,74 @@ body {
     position: relative; /* To add the glow effect */
   }
   
-
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333; /* Dark background color */
+    color: #fff; /* Text color */
+  }
   
+  .navbar .name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .navbar .photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .navbar .signout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: darkred; /* Pink button color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  
+  .navbar .signout i {
+    margin-right: 0;
+  }
+  
+  .navbar .signout:hover {
+    background-color: #c2185b; /* Darker pink color on hover */
+  }
+
+  .navbar .signin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: darkgreen; /* Pink button color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  
+  .navbar .signin i {
+    margin-right: 0;
+  }
+  
+  .navbar .signin:hover {
+    background-color: green; /* Darker pink color on hover */
+  }

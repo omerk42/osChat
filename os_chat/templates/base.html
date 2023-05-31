@@ -19,6 +19,7 @@
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     {% endblock %}
     <!-- Le javascript
     ================================================== -->
@@ -76,6 +77,20 @@
       </nav> -->
 
     <!-- </div> -->
+    <script>
+      const signOurl = "{% url 'account_logout' %}"
+      const LogUrl = "{% url 'account_login' %}"
+    </script>
+
+    <nav class="navbar">
+      <img class="photo" src="{% static 'images/favicons/favicon.ico' %}" alt="Profile Photo">
+      {% if request.user.is_authenticated %}
+      <button class="signout" onclick="window.location.href=signOurl;" ><i class="fas fa-sign-out-alt"></i></button>
+      {% else %}
+      <button class="signin" onclick="window.location.href=LogUrl;" ><i class="fas fa-sign-in-alt"></i></button>
+      {% endif %}
+    </nav>
+    
 
     <div class="container">
 
