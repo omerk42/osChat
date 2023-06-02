@@ -1,0 +1,16 @@
+
+
+1 - make connection to API
+  i - via openAI api
+  ii - via 3 party api
+  ! - can be both used i for chatgpt 3 and ii for chatgpt 4 
+
+2 - detect if user put personal info
+  i - using reg (check reg.txt)
+  ii - highlight the info
+
+3 - ssh connection (if possible)
+
+4 - enctypt decrypt data
+
+5- create good ui  
