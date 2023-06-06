@@ -1,7 +1,7 @@
 
 
 1 - make connection to API
-  i - via openAI api
+  i - via openAI api (check api.txt)
   ii - via 3 party api
   ! - can be both used i for chatgpt 3 and ii for chatgpt 4 
 

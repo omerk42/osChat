@@ -1,7 +1,100 @@
 {% extends "base.html" %}
+{% load static i18n %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock css  %}
+
+{% block javascript %}
+<script src="{% static 'js/icons.js' %}"></script>
+<script src="{% static 'js/chat.js' %}"  defer></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it@latest/dist/markdown-it.min.js"></script>
+<script src="{% static 'js/highlight.min.js' %}"></script>
+<script src="{% static 'js/highlightjs-copy.min.js' %}"></script>
+{% endblock javascript  %}
+
+{% block extra %}
+<style>
+    .highlight {
+     background-color: yellow;
+   }
+
+   
+       .hljs {
+           color: #e9e9f4;
+           background: #28293629;
+           border-radius: var(--border-radius-1);
+           border: 1px solid var(--blur-border);
+           font-size: 15px;
+       }
+
+       #message-input {
+           margin-right: 30px;
+           height: 80px;
+       }
+
+       #message-input::-webkit-scrollbar {
+           width: 5px;
+       }
+
+       /* Track */
+       #message-input::-webkit-scrollbar-track {
+           background: #f1f1f1; 
+       }
+       
+       /* Handle */
+       #message-input::-webkit-scrollbar-thumb {
+           background: #c7a2ff; 
+       }
+
+       /* Handle on hover */
+       #message-input::-webkit-scrollbar-thumb:hover {
+           background: #8b3dff; 
+       }
+   </style>
+
+<script>
+    const user_image        = `<img src="{% static 'images/user.png' %}">`;
+    const gpt_image         = `<img src="{% static 'images/gpt.png' %}">`;
+</script>
+{% endblock extra %}
+
+{% block navbar %}
+
+
+{% endblock navbar %}
+
 {% block content %}
 {% if request.user.is_authenticated %}
-<p>only loged in user can see</p>
+<div class="gradient"></div>
+        <div class="row">
+            <div class="box conversations">
+                <div class="top">
+     
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            <div class="conversation ">
+                <div class="stop_generating stop_generating-hidden">
+                    <button id="cancelButton">
+                        <span>Stop Generating</span>
+                        <i class="fa-regular fa-stop"></i>
+                    </button>
+                </div>
+                <div class="box" id="messages">
+                </div>
+                <div class="user-input">
+                    <div class="box input-box">
+                        <textarea onchange="highlightMatches()" name="message-input" id="message-input" placeholder="Ask a question" cols="30" rows="10" style="white-space: pre-wrap;" oninput="resizeTextarea(this)"></textarea>
+                        <div id="send-button">
+                            <i class="fa-regular fa-paper-plane-top"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-sidebar">
+            <i class="fa-solid fa-bars"></i>
+        </div>
 {% else %}
 <p>if user is not logedin</p>
 {% endif %}

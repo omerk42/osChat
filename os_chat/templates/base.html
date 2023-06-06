@@ -34,6 +34,10 @@
 
     {% endblock javascript %}
 
+    {% block extra %}
+
+    {% endblock extra %}
+
   </head>
 
   <body>
@@ -82,14 +86,17 @@
       const LogUrl = "{% url 'account_login' %}"
     </script>
 
+{% block navbar %}
+<div>
     <nav class="navbar">
-      <img class="photo" src="{% static 'images/favicons/favicon.ico' %}" alt="Profile Photo">
       {% if request.user.is_authenticated %}
       <button class="signout" onclick="window.location.href=signOurl;" ><i class="fas fa-sign-out-alt"></i></button>
       {% else %}
       <button class="signin" onclick="window.location.href=LogUrl;" ><i class="fas fa-sign-in-alt"></i></button>
       {% endif %}
     </nav>
+  </div>
+{% endblock navbar %}
     
 
     <div class="container">
