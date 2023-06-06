@@ -10,7 +10,6 @@ const box_conversations = document.querySelector(`.top`);
 const spinner = box_conversations.querySelector(".spinner");
 const stop_generating = document.querySelector(`.stop_generating`);
 const send_button = document.querySelector(`#send-button`);
-let prompt_lock = false;
 
 hljs.addPlugin(new CopyButtonPlugin());
 
@@ -56,7 +55,7 @@ const handle_ask = async () => {
   window.scrollTo(0, 0);
   let message = message_input.value;
 
-  if (message.length > 0) {
+  if (message.length > 0 ) {
     message_input.value = ``;
     await ask_gpt(message);
   }
@@ -73,6 +72,10 @@ const remove_cancel_button = async () => {
 
 const ask_gpt = async (message) => {
   try {
+    console.log(can_send)
+    if(!can_send){
+      return
+    }
     message_input.value = ``;
     message_input.innerHTML = ``;
     message_input.innerText = ``;
@@ -489,10 +492,14 @@ window.onload = async () => {
 
 message_input.addEventListener(`keydown`, async (evt) => {
     if (prompt_lock) return;
+    if(!can_send) return;
     if (evt.keyCode === 13 && !evt.shiftKey) {
         evt.preventDefault();
+        console.log(can_send)
         console.log('pressed enter');
-        await handle_ask();
+        if(can_send == true){
+          await handle_ask();
+        }
     } else {
       message_input.style.removeProperty("height");
       message_input.style.height = message_input.scrollHeight + 4 + "px";

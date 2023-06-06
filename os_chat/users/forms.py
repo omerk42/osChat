@@ -4,9 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django import forms
 from django.contrib.auth.hashers import make_password
-User = get_user_model()
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 from cryptography.hazmat.backends import default_backend
+import base64
+from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+import os
+User = get_user_model()
 
 class UserAdminChangeForm(admin_forms.UserChangeForm):
     class Meta(admin_forms.UserChangeForm.Meta):
@@ -42,7 +46,21 @@ class UserSignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     metadata = forms.CharField(widget=forms.Textarea)
     def save(self, request):
-        User.objects.create_user(username=self.cleaned_data['username'],email=self.cleaned_data['email'],password=make_password(self.cleaned_data['password']),metadata=self.cleaned_data['metadata'])
+        salt = os.urandom(16)
+        kdf = Scrypt(
+        salt=salt,
+        length=32,
+        n=2**14,
+        r=8,
+        p=1,
+        backend=default_backend()
+        )
+        
+        key =  base64.urlsafe_b64encode(kdf.derive(self.cleaned_data['password'].encode()))
+        f = Fernet(key)
+        encrypted = f.encrypt(self.cleaned_data['metadata'].encode())  # Encrypt the bytes. The returning object is of type bytes
+        
+        User.objects.create_user(username=self.cleaned_data['username'],email=self.cleaned_data['email'],password=make_password(self.cleaned_data['password']),metadata=encrypted,salt=salt)
 
         
 

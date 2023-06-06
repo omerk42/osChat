@@ -2,69 +2,99 @@
 {% load static i18n %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock css  %}
+{% endblock css %}
 
 {% block javascript %}
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<script>
+    var can_send = false;
+    let metadata_as_text;
+    $(document).ready(async function () {
+        let password = prompt("Enter your password to encrypt your metadata");
+        var data = new FormData();
+        let metadata;
+        data.append("password", password);
+        if (password != null) {
+            metadata = await fetch('/chat/get-metadata', {
+                method: `POST`,
+                body: data
+            })
+            metadata_as_text = await metadata.text();
+        }
+        $("#message-input").change(function (e) {
+             
+            console.log(metadata_as_text)
+            let arr = metadata_as_text.split("\r\n");
+            let string = $("#message-input").val();
+            can_send = true
+            prompt_lock = true
+            for (var i = 0; i < arr.length; i++) {
+                console.log(arr[i]);
+                const myArray = arr[i].split(":");
+                if(string.includes(myArray[1])){
+                    alert("Message contain metadata about you, change your input");
+                    can_send = false; 
+                    prompt_lock = false
+                }
+                // Do something with arr
+
+            }
+        })
+    })
+</script>
 <script src="{% static 'js/icons.js' %}"></script>
-<script src="{% static 'js/chat.js' %}"  defer></script>
+<script src="{% static 'js/chat.js' %}" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/markdown-it@latest/dist/markdown-it.min.js"></script>
 <script src="{% static 'js/highlight.min.js' %}"></script>
 <script src="{% static 'js/highlightjs-copy.min.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script>
-    $(document).ready(async function(){
-        $("#message-input").change(async function(e){
-            const metadata = await fetch('/chat/get-metadata')
 
-            console.log(await metadata.text())
-        })
-    })
-</script>
-{% endblock javascript  %}
+{% endblock javascript %}
 
 {% block extra %}
 <style>
     .highlight {
-     background-color: yellow;
-   }
+        background-color: yellow;
+    }
 
-   
-       .hljs {
-           color: #e9e9f4;
-           background: #28293629;
-           border-radius: var(--border-radius-1);
-           border: 1px solid var(--blur-border);
-           font-size: 15px;
-       }
 
-       #message-input {
-           margin-right: 30px;
-           height: 80px;
-       }
+    .hljs {
+        color: #e9e9f4;
+        background: #28293629;
+        border-radius: var(--border-radius-1);
+        border: 1px solid var(--blur-border);
+        font-size: 15px;
+    }
 
-       #message-input::-webkit-scrollbar {
-           width: 5px;
-       }
+    #message-input {
+        margin-right: 30px;
+        height: 80px;
+    }
 
-       /* Track */
-       #message-input::-webkit-scrollbar-track {
-           background: #f1f1f1; 
-       }
-       
-       /* Handle */
-       #message-input::-webkit-scrollbar-thumb {
-           background: #c7a2ff; 
-       }
+    #message-input::-webkit-scrollbar {
+        width: 5px;
+    }
 
-       /* Handle on hover */
-       #message-input::-webkit-scrollbar-thumb:hover {
-           background: #8b3dff; 
-       }
-   </style>
+    /* Track */
+    #message-input::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    #message-input::-webkit-scrollbar-thumb {
+        background: #c7a2ff;
+    }
+
+    /* Handle on hover */
+    #message-input::-webkit-scrollbar-thumb:hover {
+        background: #8b3dff;
+    }
+</style>
 
 <script>
-    const user_image        = `<img src="{% static 'images/user.png' %}">`;
-    const gpt_image         = `<img src="{% static 'images/gpt.png' %}">`;
+    const user_image = `<img src="{% static 'images/user.png' %}">`;
+    const gpt_image = `<img src="{% static 'images/gpt.png' %}">`;
 </script>
 {% endblock extra %}
 
@@ -76,82 +106,84 @@
 {% block content %}
 {% if request.user.is_authenticated %}
 <div class="gradient"></div>
-        <div class="row">
-            <div class="box conversations">
-                <div class="top">
-     
-                    <div class="spinner"></div>
-                </div>
-            </div>
-            <div class="conversation ">
-                <div class="stop_generating stop_generating-hidden">
-                    <button id="cancelButton">
-                        <span>Stop Generating</span>
-                        <i class="fa-regular fa-stop"></i>
-                    </button>
-                </div>
-                <div class="box" id="messages">
-                </div>
-                <div class="user-input">
-                    <div class="box input-box">
-                        <textarea onchange="highlightMatches()" name="message-input" id="message-input" placeholder="Ask a question" cols="30" rows="10" style="white-space: pre-wrap;" oninput="resizeTextarea(this)"></textarea>
-                        <div id="send-button">
-                            <i class="fa-regular fa-paper-plane-top"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="buttons">
-                    <div class="field">
-                        <input type="checkbox" id="switch"/>
-                        <label for="switch"></label>
-                        <span class="about">Web Access</span>
-                    </div>
-                    <div class="field">
-                        <select name="model" id="model">
-                            <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
-                            <option value="gpt-4">gpt-4</option>
-                            <option value="gpt-3.5-turbo-0301">gpt-3.5-turbo-0301</option>
-                            <option value="gpt-4-0314">gpt-4-0314</option>
-                        </select>
-                        <!-- <span class="about">Model</span> -->
-                    </div>
-                    <div class="field">
-                        <select name="jailbreak" id="jailbreak">
-                            <option value="default" selected>default</option>
-                            <option value="gpt-math-1.0">math 1.0</option>
-                            <option value="gpt-dude-1.0">dude 1.0</option>
-                            <option value="gpt-dan-1.0">dan 1.0</option>
-                            <option value="gpt-dan-2.0">dan 2.0</option>
-                            <option value="gpt-dev-2.0">dev 2.0</option>
-                            <option value="gpt-evil-1.0">evil 1.0</option>
-                        </select>
-                    </div>
+<div class="row">
+    <div class="box conversations">
+        <div class="top">
 
-                <form class="color-picker" action="">
-                    <fieldset>
-                        <legend class="visually-hidden">Pick a color scheme</legend>
-                        <label for="light" class="visually-hidden">Light</label>
-                        <input type="radio" title="light" name="theme" id="light" checked>
-                    
-                        <label for="pink" class="visually-hidden">Pink theme</label>
-                        <input type="radio" title="pink" id="pink" name="theme">
-                    
-                        <label for="blue" class="visually-hidden">Blue theme</label>
-                        <input type="radio" title="blue" id="blue" name="theme">
-                    
-                        <label for="green" class="visually-hidden">Green theme</label>
-                        <input type="radio" title="green" id="green" name="theme">
-                    
-                        <label for="dark" class="visually-hidden">Dark theme</label>
-                        <input type="radio" title="dark" id="dark" name="theme">
-                    </fieldset>
-                    </form>
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <div class="conversation ">
+        <div class="stop_generating stop_generating-hidden">
+            <button id="cancelButton">
+                <span>Stop Generating</span>
+                <i class="fa-regular fa-stop"></i>
+            </button>
+        </div>
+        <div class="box" id="messages">
+        </div>
+        <div class="user-input">
+            <div class="box input-box">
+                <textarea onchange="highlightMatches()" name="message-input" id="message-input"
+                    placeholder="Ask a question" cols="30" rows="10" style="white-space: pre-wrap;"
+                    oninput="resizeTextarea(this)"></textarea>
+                <div id="send-button">
+                    <i class="fa-regular fa-paper-plane-top"></i>
                 </div>
             </div>
         </div>
-        <div class="mobile-sidebar">
-            <i class="fa-solid fa-bars"></i>
+        <div class="buttons">
+            <div class="field">
+                <input type="checkbox" id="switch" />
+                <label for="switch"></label>
+                <span class="about">Web Access</span>
+            </div>
+            <div class="field">
+                <select name="model" id="model">
+                    <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
+                    <option value="gpt-4">gpt-4</option>
+                    <option value="gpt-3.5-turbo-0301">gpt-3.5-turbo-0301</option>
+                    <option value="gpt-4-0314">gpt-4-0314</option>
+                </select>
+                <!-- <span class="about">Model</span> -->
+            </div>
+            <div class="field">
+                <select name="jailbreak" id="jailbreak">
+                    <option value="default" selected>default</option>
+                    <option value="gpt-math-1.0">math 1.0</option>
+                    <option value="gpt-dude-1.0">dude 1.0</option>
+                    <option value="gpt-dan-1.0">dan 1.0</option>
+                    <option value="gpt-dan-2.0">dan 2.0</option>
+                    <option value="gpt-dev-2.0">dev 2.0</option>
+                    <option value="gpt-evil-1.0">evil 1.0</option>
+                </select>
+            </div>
+
+            <form class="color-picker" action="">
+                <fieldset>
+                    <legend class="visually-hidden">Pick a color scheme</legend>
+                    <label for="light" class="visually-hidden">Light</label>
+                    <input type="radio" title="light" name="theme" id="light" checked>
+
+                    <label for="pink" class="visually-hidden">Pink theme</label>
+                    <input type="radio" title="pink" id="pink" name="theme">
+
+                    <label for="blue" class="visually-hidden">Blue theme</label>
+                    <input type="radio" title="blue" id="blue" name="theme">
+
+                    <label for="green" class="visually-hidden">Green theme</label>
+                    <input type="radio" title="green" id="green" name="theme">
+
+                    <label for="dark" class="visually-hidden">Dark theme</label>
+                    <input type="radio" title="dark" id="dark" name="theme">
+                </fieldset>
+            </form>
         </div>
+    </div>
+</div>
+<div class="mobile-sidebar">
+    <i class="fa-solid fa-bars"></i>
+</div>
 {% else %}
 <p>if user is not logedin</p>
 {% endif %}
