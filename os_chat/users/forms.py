@@ -1,11 +1,12 @@
-from allauth.account.forms import SignupForm
-from allauth.socialaccount.forms import SignupForm as SocialSignupForm
 from django.contrib.auth import forms as admin_forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-
+from django.contrib.auth import get_user_model
+from django import forms
+from django.contrib.auth.hashers import make_password
 User = get_user_model()
-
+from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+from cryptography.hazmat.backends import default_backend
 
 class UserAdminChangeForm(admin_forms.UserChangeForm):
     class Meta(admin_forms.UserChangeForm.Meta):
@@ -25,17 +26,25 @@ class UserAdminCreationForm(admin_forms.UserCreationForm):
         }
 
 
-class UserSignupForm(SignupForm):
+class UserSignupForm(forms.ModelForm):
     """
     Form that will be rendered on a user sign up section/screen.
     Default fields will be added automatically.
     Check UserSocialSignupForm for accounts created from social.
     """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Username
+        self.fields['password'].widget.attrs['type'] = 'password'
+    class Meta:
+        model = User
+        fields = ['email','username']
+    password = forms.CharField(widget=forms.PasswordInput())
+    metadata = forms.CharField(widget=forms.Textarea)
+    def save(self, request):
+        User.objects.create_user(username=self.cleaned_data['username'],email=self.cleaned_data['email'],password=make_password(self.cleaned_data['password']),metadata=self.cleaned_data['metadata'])
+
+        
 
 
-class UserSocialSignupForm(SocialSignupForm):
-    """
-    Renders the form when user has signed up using social accounts.
-    Default fields will be added automatically.
-    See UserSignupForm otherwise.
-    """
+

@@ -15,12 +15,14 @@ let prompt_lock = false;
 hljs.addPlugin(new CopyButtonPlugin());
 
 
+
 function highlightMatches() {
   var input = document.getElementById('message-input');
   var value = input.value;
   var regex = /[abc]/g;
   var highlightedValue = value.replace(regex, '<span class="highlight">$&</span>');
   input.innerHTML = highlightedValue;
+  console.log(value)
 }
 
 
@@ -121,13 +123,21 @@ const ask_gpt = async (message) => {
     window.scrollTo(0, 0);
     await new Promise((r) => setTimeout(r, 1000));
     window.scrollTo(0, 0);
-
-    const response = await fetch(`/backend-api/v2/conversation`, {
+    function getCookie(name) {
+      let cookie = {};
+      document.cookie.split(';').forEach(function(el) {
+        let [k,v] = el.split('=');
+        cookie[k.trim()] = v;
+      })
+      return cookie[name];
+    }
+    const response = await fetch(`/chat/conversation`, {
       method: `POST`,
       signal: window.controller.signal,
       headers: {
         "content-type": `application/json`,
         accept: `text/event-stream`,
+        "X-CSRFToken": getCookie('csrftoken')
       },
       body: JSON.stringify({
         conversation_id: window.conversation_id,
